@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "2d66d604-249c-4b79-b622-0a828d4e7afd",
+		"name": "postman scripting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//pm.globals.set(\"useridd\", 5); // set gloval variables\r",
+							"  pm.collectionVariables.set(\"ab\",5);\r",
+							"  console.log(pm.collectionVariables.has(\"ab\"));\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//validating multoples fields\r",
+							"pm.test(\"responce check\", function () {\r",
+							"  //JSON.parse(responceBody);\r",
+							" res= pm.response.json(); //parsing json responce\r",
+							" console.log(res);\r",
+							"pm.expect(res.data.id).to.eql(5); \r",
+							"pm.expect(res.data.email).to.eql(\"charles.morris@reqres.in\"); \r",
+							"});\r",
+							"\r",
+							"//body contains strigs\r",
+							"pm.test(\"body conatins some strings\", function () {\r",
+							"pm.expect(pm.response.text()).to.include(\"cha\");\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"//json contains some data\r",
+							"pm.test(\"varifying data is not null\", function()\r",
+							"{\r",
+							"js= pm.response.json();\r",
+							"console.log(js);\r",
+							"pm.expect(js).not.eq(null)\r",
+							"});\r",
+							"\r",
+							"//status codes\r",
+							"\r",
+							"pm.test(\"status codes\", function () {\r",
+							"pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"//verify headres\r",
+							"pm.test(\"contet type\", function () {\r",
+							"pm.response.to.have.header(\"Content-Type\");\r",
+							"\r",
+							"});\r",
+							"tests[\"response header\"]=postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Response time is less than 200ms\"] = responseTime < 600;\r",
+							"tests[\"code\"]= responseCode.code ===200 \r",
+							"\r",
+							"pm.test(\"response hedares verify\",function()\r",
+							"{\r",
+							"//a= pm.response.json();\r",
+							"pm.expect(postman.getResponseHeader(\"Content-Encoding\")).to.eq(\"br\"); \r",
+							"pm.expect(postman.getResponseHeader(\"Content-Type\")).to.eq(\"application/json; charset=utf-8\")\r",
+							"\r",
+							"});\r",
+							"v= pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"ab\",v.data.id);\r",
+							"postman.setNextRequest(\"a\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{ab}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{ab}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "a",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"in a\")\r",
+							"ress= pm.response.json();\r",
+							"pm.test(\"checking id\",function()\r",
+							"{\r",
+							"\r",
+							"pm.expect(ress.data.id).to.eq(5)\r",
+							"\r",
+							"}\r",
+							");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{ab}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{ab}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "useridd",
+			"value": "1"
+		},
+		{
+			"key": "ab",
+			"value": "5"
+		}
+	]
+}
